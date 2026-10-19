@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convite de Casamento — Nome & Nome</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+
+        :root {
+            --cor-primaria: #8B4513;
+            --cor-secundaria: #D4AF37;
+            --cor-fundo: #FFFAF5;
+            --cor-texto: #444444;
+            --cor-destaque: #A0522D;
+        }
+
+        body {
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* Animações */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes coraçãoFlutuar {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+        }
+
+        @keyframes enfeitePulsar {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        .animar-entrada {
+            opacity: 0;
+            animation: fadeInUp 1.2s ease forwards;
+        }
+
+        .atraso-1 { animation-delay: 0.2s; }
+        .atraso-2 { animation-delay: 0.4s; }
+        .atraso-3 { animation-delay: 0.6s; }
+        .atraso-4 { animation-delay: 0.8s; }
+        .atraso-5 { animation-delay: 1s; }
+
+        /* Cabeçalho */
+        .cabecalho {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            background: linear-gradient(180deg, #FFF8EF 0%, var(--cor-fundo) 100%);
+        }
+
+        .enfeite {
+            color: var(--cor-secundaria);
+            font-size: 2rem;
+            margin: 1rem 0;
+            animation: enfeitePulsar 3s ease-in-out infinite;
+        }
+
+        .nomes {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            color: var(--cor-primaria);
+            font-weight: normal;
+            font-style: italic;
+            margin: 1rem 0;
+            letter-spacing: 3px;
+        }
+
+        .frase {
+            font-size: 1.2rem;
+            color: var(--cor-destaque);
+            max-width: 600px;
+        }
+
+        .contador {
+            display: flex;
+            gap: 1.5rem;
+            margin: 2.5rem 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .bloco-tempo {
+            background: #fff;
+            border: 1px solid var(--cor-secundaria);
+            border-radius: 12px;
+            padding: 1.2rem;
+            min-width: 90px;
+            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .bloco-tempo:hover {
+            transform: translateY(-5px);
+        }
+
+        .numero {
+            font-size: 2rem;
+            color: var(--cor-primaria);
+            font-weight: bold;
+        }
+
+        .rotulo {
+            font-size: 0.85rem;
+            color: var(--cor-destaque);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Seções */
+        .secao {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .secao h2 {
+            color: var(--cor-primaria);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .caixa-info {
+            background: #fff;
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 5px 20px rgba(139, 69, 19, 0.08);
+            border-left: 3px solid var(--cor-secundaria);
+            transition: all 0.3s ease;
+        }
+
+        .caixa-info:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.12);
+        }
+
+        .botao {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--cor-primaria), var(--cor-destaque));
+            color: #fff;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .botao:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(139, 69, 19, 0.3);
+        }
+
+        .botao.secundario {
+            background: transparent;
+            border: 2px solid var(--cor-primaria);
+            color: var(--cor-primaria);
+        }
+
+        .botao.secundario:hover {
+            background: var(--cor-primaria);
+            color: #fff;
+        }
+
+        /* Corações flutuantes */
+        .coracao {
+            position: fixed;
+            color: #e8a87c;
+            font-size: 1.2rem;
+            pointer-events: none;
+            z-index: 100;
+            animation: coraçãoFlutuar 4s ease-out forwards;
+        }
+
+        /* Rodapé */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--cor-destaque);
+            font-size: 0.9rem;
+        }
+
+        .confirmacao {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: #fff9f2;
+            border-radius: 16px;
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .confirmacao.visivel {
+            display: block;
+        }
+
+        input {
+            padding: 0.8rem;
+            margin: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 250px;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 480px) {
+            .contador { gap: 0.8rem; }
+            .bloco-tempo { min-width: 70px; padding: 0.8rem; }
+            .numero { font-size: 1.5rem; }
+            input { width: 100%; max-width: 250px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Corações animados via JS -->
+    <div id="coracoes"></div>
+
+    <!-- Cabeçalho -->
+    <header class="cabecalho">
+        <p class="animar-entrada atraso-1">Com a graça de Deus e o carinho das famílias</p>
+        <div class="enfeite animar-entrada atraso-2">✿ ❤ ✿</div>
+        <h1 class="nomes animar-entrada atraso-3">Maria & João</h1>
+        <p class="frase animar-entrada atraso-4">“O amor é paciente, o amor é bondoso.” — 1 Coríntios 13:4</p>
+        
+        <div class="contador animar-entrada atraso-5" id="contador">
+            <div class="bloco-tempo">
+                <div class="numero" id="dias">00</div>
+                <div class="rotulo">Dias</div>
+            </div>
+            <div class="bloco-tempo">
+                <div class="numero" id="horas">00</div>
+                <div class="rotulo">Horas</div>
+            </div>
+            <div class="bloco-tempo">
+                <div class="numero" id="minutos">00</div>
+                <div class="rotulo">Minutos</div>
+            </div>
+            <div class="bloco-tempo">
+                <div class="numero" id="segundos">00</div>
+                <div class="rotulo">Segundos</div>
+            </div>
+        </div>
+        <p class="animar-entrada atraso-5">Estamos contando os segundos para este momento especial!</p>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main>
+        <section class="secao">
+            <h2>💒 Cerimônia</h2>
+            <div class="caixa-info">
+                <p><strong>Data:</strong> 15 de Março de 2027 — Domingo, às 16h</p>
+                <p><strong>Local:</strong> Igreja Matriz de Santana do Ipanema</p>
+                <p><strong>Endereço:</strong> Centro, Santana do Ipanema — AL</p>
+                <a href="https://www.google.com/maps" target="_blank" class="botao secundario">Ver no Mapa</a>
+            </div>
+        </section>
+
+        <section class="secao">
+            <h2>🥂 Recepção</h2>
+            <div class="caixa-info">
+                <p>Após a cerimônia, será um prazer celebrar com você!</p>
+                <p><strong>Local:</strong> Salão de Festas — Espaço Bella Vida</p>
+                <p><strong>Endereço:</strong> Av. Principal, 200 — Santana do Ipanema, AL</p>
+                <a href="https://www.google.com/maps" target="_blank" class="botao secundario">Ver no Mapa</a>
+            </div>
+        </section>
+
+        <section class="secao">
+            <h2>💌 Confirme sua Presença</h2>
+            <p>Sua presença é nosso maior presente! Por favor, confirme até 15 de Fevereiro de 2027.</p>
+            
+            <button class="botao" id="botaoConfirmar">Confirmar Presença</button>
+            
+            <div class="confirmacao" id="formConfirmacao">
+                <p style="margin-bottom: 1rem;">Ficamos muito felizes em receber você! 💝</p>
+                <input type="text" id="nomeConvidado" placeholder="Digite seu nome completo">
+                <input type="tel" id="telefoneConvidado" placeholder="Seu telefone (com DDD)">
+                <br>
+                <button class="botao" id="enviarResposta">Enviar Confirmação</button>
+                <p id="mensagemSucesso" style="color: green; margin-top: 1rem; display: none;">✅ Obrigado! Sua presença foi confirmada. Te esperamos com muito carinho!</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>Com todo o nosso amor,</p>
+        <p style="font-size: 1.5rem; font-style: italic; margin: 0.5rem 0;">Maria & João 💍</p>
+        <p style="margin-top: 1rem;">📞 Dúvidas? (82) 9XXXX-XXXX</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 1. Contador Regressivo
+        const dataCasamento = new Date('2027-03-15T16:00:00').getTime();
+
+        function atualizarContador() {
+            const agora = new Date().getTime();
+            const diferenca = dataCasamento - agora;
+
+            if (diferenca < 0) {
+                document.getElementById('contador').innerHTML = 
+                    '<p style="font-size: 1.5rem; color: var(--cor-primaria);">✨ Já aconteceu! Obrigado por fazer parte ✨</p>';
+                return;
+            }
+
+            const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
+            const segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
+
+            document.getElementById('dias').textContent = String(dias).padStart(2, '0');
+            document.getElementById('horas').textContent = String(horas).padStart(2, '0');
+            document.getElementById('minutos').textContent = String(minutos).padStart(2, '0');
+            document.getElementById('segundos').textContent = String(segundos).padStart(2, '0');
+        }
+
+        atualizarContador();
+        setInterval(atualizarContador, 1000);
+
+        // 2. Corações flutuantes ao clicar
+        document.addEventListener('click', (e) => {
+            const coracao = document.createElement('span');
+            coracao.className = 'coracao';
+            coracao.textContent = '❤️';
+            coracao.style.left = `${e.clientX}px`;
+            coracao.style.top = `${e.clientY}px`;
+            document.getElementById('coracoes').appendChild(coracao);
+            
+            setTimeout(() => coracao.remove(), 4000);
+        });
+
+        // 3. Formulário de confirmação
+        const botaoConfirma = document.getElementById('botaoConfirmar');
+        const formConfirma = document.getElementById('formConfirmacao');
+        const botaoEnviar = document.getElementById('enviarResposta');
+        const mensagemSucesso = document.getElementById('mensagemSucesso');
+
+        botaoConfirma.addEventListener('click', () => {
+            formConfirma.classList.add('visivel');
+            botaoConfirma.style.display = 'none';
+        });
+
+        botaoEnviar.addEventListener('click', () => {
+            const nome = document.getElementById('nomeConvidado').value.trim();
+            const telefone = document.getElementById('telefoneConvidado').value.trim();
+            
+            if (nome && telefone) {
+                mensagemSucesso.style.display = 'block';
+                botaoEnviar.disabled = true;
+                botaoEnviar.textContent = 'Confirmado ✅';
+                // Aqui você pode enviar os dados para um servidor
+                console.log('Confirmação:', { nome, telefone });
+            } else {
+                alert('Por favor, preencha todos os campos! 💝');
+            }
+        });
+    </script>
+</body>
+</html>
